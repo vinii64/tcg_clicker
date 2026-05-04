@@ -1,0 +1,98 @@
+@font-face {
+  font-family: lexend;
+  src: url(../assets/lexend.ttf);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Lexend', sans-serif;
+}
+
+
+
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #234C6A, #1A3B57);
+}
+
+/* ===== Contenedor del login ===== */
+.login-container {
+    background: rgba(210, 193, 182, 0.95);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 50px 40px;
+    text-align: center;
+    width: 400px;
+    max-width: 90%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+/* ===== Títulos ===== */
+h1 {
+    color: #234C6A;
+    margin-bottom: 25px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* ===== Inputs ===== */
+input {
+    width: 100%;
+    padding: 14px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 25px;
+    background-color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+
+
+/* ===== Botón ===== */
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #234C6A, #32556E);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+button:hover { 
+    background: linear-gradient(90deg, #15334d, #1f445f);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* ===== Link tipo botón (registro) ===== */
+.reg {
+    display: inline-block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #234C6A, #32556E);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}

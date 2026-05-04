@@ -1,0 +1,69 @@
+@font-face {
+  font-family: lexend;
+  src: url(../assets/lexend.ttf);
+}
+
+
+* {
+    box-sizing: border-box;
+    font-family: lexend;
+}
+
+
+
+body {
+    margin: 0;
+    background-color: #f2e9e4;
+}
+
+nav {
+    display: flex;
+    background-color: #4a4e69;
+}
+
+nav a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #22223b;
+}
+
+.caja {
+    display: grid;
+    place-items: center;
+    margin-top: 40px;
+}
+
+.boton {
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: #22223b;
+    color: white;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.boton:active {
+    transform: scale(1.1);
+}
+
+#carta {
+    position: relative;
+    border-radius: 10px;
+    transition: transform 0.1s;
+    transform-style: preserve-3d;
+}
+
+.glare {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
