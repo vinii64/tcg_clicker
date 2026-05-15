@@ -51,6 +51,12 @@ TCG y Clicker sin G y con un poco de clicker.
 - 6 mitico
 - 7 divino
 
+comun
+Foil → 76–85 (10%)
+Holo → 86–92 (7%)
+Polychrome → 93–97 (5%)
+Negative → 98–100 (3%)
+
 https://uiverse.io/dylanharriscameron/tiny-shrimp-95 efecto 3d
 
 

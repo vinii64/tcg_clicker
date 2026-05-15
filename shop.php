@@ -33,13 +33,10 @@
 
 <div class="caja">
   <p><span id="contador"><?php echo $usuario['puntos']; ?></span></p>
-    <button class="boton" onclick="comprar()">Comprar paquete</button>
-</div>
-
-<div class="caja">
+    <button class="boton" id='comprar'>Comprar Paquete</button>
     <div id="contenedor"></div>
 </div>
 
-<script src="script/script.js"></script>
+<script src="script/comprarPaquete.js"></script>
 </body>
 </html>

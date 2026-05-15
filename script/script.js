@@ -1,7 +1,9 @@
 
+let clicks = 0;
 
-function actualizarContador() {
-    document.getElementById("contador").textContent = clicks;
+function alertaPuntos(){
+    alert("Puntos insuficientes");
+    return;
 }
 
 function contar() {
@@ -49,44 +51,15 @@ function comprar() {
 }
 */
 
-function comprar() {
-    if ($usuario['puntos'] < 10) {
-     alert("Puntos insuficientes");
-        return;
-    }
-
-    $usuario['puntos'] -= 10;
-    actualizarContador();
-    crearCarta();
-
-    aplicarEfectoCarta(carta, brillo);
-}
 
 
 
 
-
+/*
 function crearCarta() {
-    const contenedor = document.getElementById("contenedor");
-    contenedor.innerHTML = "";
 
-    const carta = document.createElement("div");
-    carta.id = "carta"; 
-
-    const imagen = document.createElement("img");
-    const cartaNum = Math.floor(Math.random() * 6);
-    imagen.src = `cartas/${cartaNum}.png`;
-
-    const brillo = document.createElement("div");
-    brillo.className = "glare";
-
-    carta.appendChild(imagen);
-    carta.appendChild(brillo);
-    contenedor.appendChild(carta);
-
-    aplicarEfectoCarta(carta, brillo);
 }
-
+*/
 
 
 function aplicarEfectoCarta(card, brillo) {
@@ -114,24 +87,20 @@ function aplicarEfectoCarta(card, brillo) {
     });
 }
 
-
 /*
-function showUser(str){
-    if(str == "")
+function comprar()
+{
+    if (clicks < 10)
     {
-        document.getElementById("textHint").innerHTML = "";
+     alert("Puntos insuficientes");
         return;
     }
-    else
-    {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200)
-            {
-                document.getElementById("textHint").innerHTML=this.responseText;
-            }
-        }
-        xmlhttp.open("GET", "busqueda.php?q=" + str, true)
-    }
-}*/
+    clicks -= 10;
+    actualizarContador();
+    crearCarta();
+
+    aplicarEfectoCarta(carta, brillo);
+}
+*/
+
 
