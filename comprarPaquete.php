@@ -1,53 +1,53 @@
-<?php
-
+<?php 
 include('conexion.php');
-
 session_start();
 
-if (!isset($_SESSION['usuario'])) {
-
+// Validamos que el usuario tenga una sesión activa
+if (!isset($_SESSION['id'])) {
+    header('Content-Type: application/json');
+    echo json_encode(array('status' => 'error', 'mensaje' => 'Sesión no iniciada'));
     exit();
 }
 
-$id_usuario = $_SESSION['id'];
+$id_user = $_SESSION['id'];
 
+// Seleccionamos los puntos actuales del usuario
+$query2 = "SELECT puntos FROM usuarios WHERE id = '$id_user'";
+$puntosDB = mysqli_query($conexion, $query2);
+$resultado = mysqli_fetch_assoc($puntosDB);
 
-// Obtener puntos actuales
-$query = "SELECT puntos FROM usuarios WHERE id = '$id_usuario'";
+$respuesta = array();
 
-$resultado = mysqli_query($conexion, $query);
+// Verificamos si tiene puntos suficientes para el paquete (costo: 10)
+if ($resultado['puntos'] >= 10) {
+    $puntosActuales = $resultado['puntos'] - 10;
+    $query = "UPDATE usuarios SET puntos = '$puntosActuales' WHERE id = '$id_user'";
+    $actualizacionPuntos = mysqli_query($conexion, $query);
 
-$usuario = mysqli_fetch_assoc($resultado);
-
-$puntos = $usuario['puntos'];
-
-
-// Verificar si tiene puntos
-if($puntos <= 0){
-
-    echo $puntos;
-
-    exit();
+    if ($actualizacionPuntos) {
+        $respuesta['status'] = 'success';
+        $respuesta['puntos'] = $puntosActuales;
+        // Mandamos la estructura del botón con los puntos actualizados
+        $respuesta['html_puntos'] = "
+            <p>Mis Puntos: <span id='contador'>".$puntosActuales."</span></p>
+            <button class='boton' id='comprar'>Comprar Paquete</button>
+        ";
+    } else {
+        $respuesta['status'] = 'error';
+        $respuesta['mensaje'] = 'No se pudieron actualizar los puntos en la base de datos';
+    }
+} else {
+    // Si no tiene saldo suficiente
+    $respuesta['status'] = 'no_points';
+    $respuesta['puntos'] = $resultado['puntos'];
+    $respuesta['html_puntos'] = "
+        <p>Mis Puntos: <span id='contador'>".$resultado['puntos']."</span></p>
+        <button class='boton' id='comprar'>Comprar Paquete</button>
+    ";
 }
 
-
-// Restar 1 punto
-$query2 = "UPDATE usuarios 
-           SET puntos = puntos - 1 
-           WHERE id = '$id_usuario'";
-
-mysqli_query($conexion, $query2);
-
-
-// Obtener nuevos puntos
-$query3 = "SELECT puntos FROM usuarios WHERE id = '$id_usuario'";
-
-$resultado2 = mysqli_query($conexion, $query3);
-
-$usuario2 = mysqli_fetch_assoc($resultado2);
-
-
-// Devolver nuevos puntos
-echo $usuario2['puntos'];
-
+// Declaramos que la salida es estrictamente JSON y la enviamos
+header('Content-Type: application/json');
+echo json_encode($respuesta);
+exit();
 ?>

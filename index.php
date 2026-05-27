@@ -35,5 +35,7 @@
 </div>
 
 <script src="script/scriptAjaxPuntos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/atropos@2.0.2/atropos.min.js"></script>
+<script src="script/atropos.js"></script>
 </body>
 </html>

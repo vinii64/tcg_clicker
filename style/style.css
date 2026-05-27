@@ -1,15 +1,15 @@
+/* =========================================
+   1. TUS ESTILOS BASE Y UI
+   ========================================= */
 @font-face {
-  font-family: lexend;
-  src: url(../assets/lexend.ttf);
+    font-family: lexend;
+    src: url(../assets/lexend.ttf);
 }
-
 
 * {
     box-sizing: border-box;
     font-family: lexend;
 }
-
-
 
 body {
     margin: 0;
@@ -53,17 +53,98 @@ nav a:hover {
     transform: scale(1.1);
 }
 
-#carta {
-    position: relative;
-    border-radius: 10px;
-    transition: transform 0.1s;
-    transform-style: preserve-3d;
+/* =========================================
+   2. ESTRUCTURA DE LAS CARTAS (ATROPOS)
+   ========================================= */
+
+/* Contenedor donde aparecen las cartas compradas */
+.grid-tcg {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px;
 }
 
-.glare {
+/* Tamaño estándar de la carta TCG */
+.mi-carta-tcg {
+    width: 260px;
+    height: 362px;
+}
+
+/* Contenedor visual que recorta los bordes redondeados */
+.contenedor-visual {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden; /* Evita que el brillo se salga del cartón */
+}
+
+/* Imagen base de la carta */
+.carta-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Capa transparente que Atropos moverá sobre la imagen */
+.capa-brillo {
     position: absolute;
-    inset: 0;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    pointer-events: none; /* Para que el ratón no se atore en el brillo */
+    z-index: 10;
+}
+
+
+/* =========================================
+   3. FILTROS DE TUS RAREZAS
+   ========================================= */
+
+/* NORMAL: Sin efectos extraños */
+.normal {
+    display: none;
+}
+
+/* FOIL: Reflejo metálico de aluminio (Blanco/Plateado) */
+.foil {
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.8) 45%, rgba(200, 200, 200, 0.9) 50%, transparent 65%);
+    background-size: 250% 250%;
+    mix-blend-mode: hard-light;
+    opacity: 0.85;
+}
+
+/* HOLO: Arcoíris clásico vibrante */
+.holo {
+    background: repeating-linear-gradient(135deg, rgba(255,0,0,0.5), rgba(255,255,0,0.5), rgba(0,255,0,0.5), rgba(0,255,255,0.5), rgba(0,0,255,0.5), rgba(255,0,255,0.5), rgba(255,0,0,0.5));
+    background-size: 300% 300%;
+    mix-blend-mode: color-dodge;
+    opacity: 0.7;
+}
+
+/* POLICROMO: Mutación de colores radiactiva (con animación automática) */
+.policromo {
+    background: radial-gradient(circle, #ff0055 0%, #00ffaa 40%, #5500ff 80%);
+    background-size: 200% 200%;
+    mix-blend-mode: screen;
+    opacity: 0.9;
+    animation: locuraCromatica 3s infinite alternate;
+}
+@keyframes locuraCromatica {
+    0% { filter: hue-rotate(0deg) saturate(2); }
+    100% { filter: hue-rotate(360deg) saturate(4); }
+}
+
+/* NEGATIVO: Invierte los colores (Ya centrado desde el inicio) */
+.negativo {
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 70%);
+    background-size: 200% 200%;
+    background-position: 50% 50%;
+    mix-blend-mode: difference;
+    opacity: 1;
 }
