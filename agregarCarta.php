@@ -37,6 +37,7 @@ if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] == 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
 
@@ -50,20 +51,22 @@ if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] == 0) {
 
   <form method="post" enctype="multipart/form-data">
     
-    <label for="myfile">Imagen de la carta:</label>
-    <input type="file" name="archivo"><br>
+    <div class="contenedor">
+      <label for="myfile">Imagen de la carta:</label>
+      <input type="file" name="archivo"><br>
 
-    <label for="rareza">Rareza:</label>
-    <select name="rareza" id="rareza">
-        <option value="comun">Común</option>
-        <option value="especial">Especial</option>
-        <option value="raro">Raro</option>
-        <option value="epico">Épico</option>
-        <option value="legendario">Legendario</option>
-        <option value="mitico">Mítico</option>
-        <option value="divino">Divino</option>
-    </select><br>
-    <button type="submit">Agregar carta</button>
+      <label for="rareza">Rareza:</label>
+      <select name="rareza" id="rareza">
+          <option value="comun">Común</option>
+          <option value="especial">Especial</option>
+          <option value="raro">Raro</option>
+          <option value="epico">Épico</option>
+          <option value="legendario">Legendario</option>
+          <option value="mitico">Mítico</option>
+          <option value="divino">Divino</option>
+      </select><br>
+      <button type="submit">Agregar carta</button>
+    </div>
   </form>
     
 </body>
