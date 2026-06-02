@@ -22,6 +22,6 @@
   <a href="inventory.php">Biblioteca</a>
   <a href="logout.php">Salir</a>
 </nav>
-<script src="script.js"></script>
+
 </body>
 </html>

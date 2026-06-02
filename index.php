@@ -26,6 +26,7 @@
   <a href="shop.php">Tienda</a>
   <a href="inventory.php">Biblioteca</a>
   <a href="logout.php">Salir</a>
+  <a href="agregarCarta.php">Agregar Carta</a>
 </nav>
 
 <div class="caja">
@@ -34,6 +35,6 @@
     
 </div>
 
-<script src="script/scriptAjaxPuntos.js"></script>
+<script src="script/ajaxPuntos.js"></script>
 </body>
 </html>

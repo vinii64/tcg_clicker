@@ -3,6 +3,9 @@ include('conexion.php');
 session_start();
 $id_user = $_SESSION['id'];
 
+$rarezaCarta = "";
+$rollCarta = "";
+
 //seleccionamos los puntos actuales de la bbdd
 $query2 = 'SELECT puntos FROM usuarios WHERE id = "'.$id_user.'"';
 $puntosDB = mysqli_query($conexion,$query2);
@@ -30,27 +33,27 @@ if($resultado['puntos'] >= 10){
 
          switch ($rareza) {
             case ($rareza >= 0 && $rareza <= 50): // comun
-               echo "comun ";
+               $rarezaCarta = "comun ";
             break;
 
             case ($rareza >= 51 && $rareza <= 65): // especial
-               echo "especial ";
+               $rarezaCarta = "especial ";
             break;
 
             case ($rareza >= 66 && $rareza <= 75): // epico
-               echo "epic ";
+               $rarezaCarta = "epico ";
             break;
 
             case ($rareza >= 76 && $rareza <= 80): // legendary
-               echo "legendario ";
+               $rarezaCarta = "legendario ";
             break;
 
             case ($rareza >= 81 && $rareza <= 99): // mithic
-               echo "mithic ";
+               $rarezaCarta = "mithic ";
             break;
 
             case ($rareza == 100): // divine
-               echo "divine ";
+               $rarezaCarta = "divine ";
             break;
 
             default:
@@ -63,32 +66,51 @@ if($resultado['puntos'] >= 10){
          switch ($roll) {
             // 75% normal
             case ($roll <= 75):
-               echo "normal";
+               $rollCarta = "normal";
                echo "<br>";
             break;
 
             // 25% ediciones
             case ($roll <= 85): // 40% de 25
-               echo "foil";
+               $rollCarta = "foil";
                echo "<br>";
             break;
 
             case ($roll <= 92): // +30%
-               echo "holo";
+               $rollCarta = "holo";
                echo "<br>";
             break;
 
             case ($roll <= 97): // +20%
-               echo "polychrome";
+               $rollCarta = "polychrome";
                echo "<br>";
             break;
 
             case ($roll <= 100): // +10%
-               echo "negative";
+               $rollCarta = "negative";
                echo "<br>";
             break;
          }
          $cartaAmount = $cartaAmount+1; //incrementamos el contador
+
+         $id_img = random_int(0,6); //<-- img random desde la carpeta "cartas"
+
+         //$sql = "SELECT * FROM cartas WHERE rareza = '".$rarezaCarta."' ORDER BY RAND() LIMIT 1"; //<-- id de la imagen random desde la base de datos, el resultado se filtra por rareza
+
+         //$sql = "SELECT * FROM cartas ORDER BY RAND() LIMIT 1"; //<-- id de la imagen random desde la base de datos
+
+         //id_img random desde la base de datos
+         //$resultado = mysqli_query($conexion, $sql);
+         //$fila = mysqli_fetch_assoc($resultado);
+         //$id_img = $fila['id'];
+
+         echo "<div class='carta'>
+                  <img src='cartas/".$id_img.".png' alt='Carta ".$id_img."'>
+                  <p>Rareza: ".$rarezaCarta."</p>
+                  <p>Edición: ".$rollCarta."</p>
+                  <button class='boton' id='verCarta'>Agregar carta al inventario</button> 
+               </div>";
+
       }
       echo "</div>";
  

@@ -37,6 +37,6 @@
     <div id="contenedor"></div>
 </div>
 
-<script src="script/comprarPaquete.js"></script>
+<script src="script/ajaxPaquete.js"></script>
 </body>
 </html>
