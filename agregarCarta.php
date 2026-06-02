@@ -40,6 +40,14 @@ if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] == 0) {
 </head>
 <body>
 
+  <nav>
+    <a href="index.php">Inicio</a>
+    <a href="shop.php">Tienda</a>
+    <a href="biblioteca.php">Biblioteca</a>
+    <a href="logout.php">Salir</a>
+    <a href="agregarCarta.php">Agregar Carta</a>
+  </nav>
+
   <form method="post" enctype="multipart/form-data">
     
     <label for="myfile">Imagen de la carta:</label>

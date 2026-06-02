@@ -27,8 +27,9 @@
 <nav>
   <a href="index.php">Inicio</a>
   <a href="shop.php">Tienda</a>
-  <a href="inventory.php">Biblioteca</a>
+  <a href="biblioteca.php">Biblioteca</a>
   <a href="logout.php">Salir</a>
+  <a href="agregarCarta.php">Agregar Carta</a>
 </nav>
 
 <div class="caja">

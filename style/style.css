@@ -68,6 +68,16 @@ nav a:hover {
     transition: opacity 0.2s;
 }
 
-#contenedor {
+.inventario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
 
+.carta img {
+    width: 100%;
+    height: auto;
+    display: block;
 }

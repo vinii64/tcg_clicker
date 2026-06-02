@@ -108,19 +108,12 @@ if($resultado['puntos'] >= 10){
                   <img src='cartas/".$id_img.".png' alt='Carta ".$id_img."'>
                   <p>Rareza: ".$rarezaCarta."</p>
                   <p>Edición: ".$rollCarta."</p>
-                  <button class='boton' id='verCarta'>Agregar carta al inventario</button> 
                </div>";
 
       }
-      echo "</div>";
+
  
    }
-}else{
-   $puntosActuales = $resultado['puntos'];
-   echo "<p><span id='contador'>".$puntosActuales." </span></p>
-            <button class='boton' id='comprar'>Comprar Paquete</button>
-            <div id='contenedor'></div>"; //aca van las cartas
-   echo "<script>alert('hola')</script>";
 }
 
 ?>
