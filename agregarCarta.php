@@ -18,57 +18,61 @@ if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] == 0) {
     $consulta = mysqli_query($conexion, $sql); //inserta en la bbdd
 
     if ($consulta) {
-        echo "carta ingresada correctamente";
-        $resultado = mysqli_query($conexion, "SELECT imagen FROM cartas WHERE id = 46");
-        $fila = mysqli_fetch_assoc($resultado);
-
-       //linea para mostrar la carta con el BLOB echo "<img src='data:image/jpeg;base64,".base64_encode($fila['imagen'])."'>";
+        echo '<script>alert("Carta agregada.");</script>';
     } else {
-        echo "hubo un error al subir la imagen";
+        echo '<script>alert("Hubo un error");</script>';
     }
-
-}
+    }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Agregar Carta</title>
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
 
 <nav>
-  <a href="index.php">Inicio</a>
-  <a href="shop.php">Tienda</a>
-  <a href="biblioteca.php">Biblioteca</a>
-  <a href="agregarCarta.php">Agregar carta</a>
-  <a href="eliminarCarta.php">Eliminar carta</a>
+    <a href="index.php">Inicio</a>
+    <a href="shop.php">Tienda</a>
+    <a href="biblioteca.php">Biblioteca</a>
+    <a href="agregarCarta.php">Agregar carta</a>
+    <a href="eliminarCarta.php">Eliminar carta</a>
     <a href="logout.php">Salir</a>
 </nav>
 
-  <form method="post" enctype="multipart/form-data">
-    
-    <div class="contenedor">
-      <label for="myfile">Imagen de la carta:</label>
-      <input type="file" name="archivo"><br>
+<form method="post" enctype="multipart/form-data">
 
-      <label for="rareza">Rareza:</label>
-      <select name="rareza" id="rareza">
-          <option value="comun">Común</option>
-          <option value="especial">Especial</option>
-          <option value="raro">Raro</option>
-          <option value="epico">Épico</option>
-          <option value="legendario">Legendario</option>
-          <option value="mitico">Mítico</option>
-          <option value="divino">Divino</option>
-      </select><br>
-      <button type="submit">Agregar carta</button>
+    <div class="contenedor">
+
+        <label>Imagen de la carta:</label>
+        <input type="file" name="archivo" accept="image/*" required>
+        <br>
+
+        <label>Rareza:</label>
+        <select name="rareza" required>
+            <option value="comun">Común</option>
+            <option value="especial">Especial</option>
+            <option value="raro">Raro</option>
+            <option value="epico">Épico</option>
+            <option value="legendario">Legendario</option>
+            <option value="mitico">Mítico</option>
+            <option value="divino">Divino</option>
+        </select>
+        <br>
+
+        <button type="submit">Agregar carta</button>
+
     </div>
-  </form>
-    
+
+</form>
+
 </body>
 </html>
+
+
+
