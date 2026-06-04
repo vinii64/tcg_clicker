@@ -49,8 +49,9 @@
             <button type="submit">Aceptar</button><br><br><br>   
         </form>
 
-        <a class="reg" href="register.php">Registrarse</a>
+        
 
+     <p id="cartel">¿No tenes cuenta? <a class="reg" href="register.php">¡Registrate!</a></p>
     </div>
 
 

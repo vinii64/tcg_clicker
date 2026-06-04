@@ -1,6 +1,15 @@
 @font-face {
-  font-family: lexend;
-  src: url(../assets/lexend.ttf);
+    font-family: 'lexend';
+    src: url(../assets/lexend.ttf);
+}
+
+/* --- Variables Globales Unificadas --- */
+:root {
+    --bg-main: #121214;       /* Negro mate premium (igual al body anterior) */
+    --bg-card: #1a1a1e;       /* Gris oscuro para contenedores e inputs */
+    --accent: #ffffff;        /* Blanco puro para contrastes y botones principales */
+    --text-main: #a1a1aa;     /* Gris claro para textos secundarios y placeholders */
+    --text-bright: #f4f4f5;   /* Blanco suave para títulos y texto del botón */
 }
 
 * {
@@ -8,23 +17,24 @@
     font-family: 'Lexend', sans-serif;
 }
 
-
-
-
 body {
     margin: 0;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #234C6A, #1A3B57);
+    background-color: var(--bg-main);
+    /* Sutil degradado radial oscuro para dar profundidad al fondo */
+    background-image: radial-gradient(circle at center, #1c1c21 0%, #121214 100%);
+    -webkit-font-smoothing: antialiased;
 }
 
-/* ===== Contenedor del login ===== */
+/* ===== Contenedor del login (Estilo Tarjeta Limpia) ===== */
 .login-container {
-    background: rgba(210, 193, 182, 0.95);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
+    background-color: var(--bg-card);
+    border: none; /* Sin marcos */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Sombra profunda y suave */
+    border-radius: 16px; /* Bordes suavizados modernos */
     padding: 50px 40px;
     text-align: center;
     width: 400px;
@@ -32,67 +42,93 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-
 /* ===== Títulos ===== */
 h1 {
-    color: #234C6A;
-    margin-bottom: 25px;
+    color: var(--text-bright);
+    margin-bottom: 30px;
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: 600;
+    letter-spacing: -0.5px;
 }
 
-/* ===== Inputs ===== */
+/* ===== Inputs (Integrados en el fondo oscuro) ===== */
 input {
     width: 100%;
     padding: 14px 20px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 25px;
-    background-color: #fff;
-    font-size: 1rem;
+    margin: 12px 0;
+    border: none; /* Sin marcos */
+    border-radius: 8px; /* Consistente con el estilo anterior */
+    background-color: #242429; /* Un gris ligeramente más claro que el contenedor */
+    color: var(--text-bright);
+    font-size: 0.95rem;
     outline: none;
-    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Estilo para el texto de sugerencia (placeholder) */
+input::placeholder {
+    color: #52525b;
+}
 
+/* Pequeño cambio al hacer foco en el input sin usar bordes rígidos */
+input:focus {
+    background-color: #2a2a30;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1); 
+}
 
-/* ===== Botón ===== */
+/* ===== Botón Principal (Alto Contraste) ===== */
 button {
     width: 100%;
     padding: 14px;
-    margin-top: 20px;
+    margin-top: 25px;
     border: none;
-    border-radius: 25px;
-    background: linear-gradient(90deg, #234C6A, #32556E);
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.1rem;
+    border-radius: 8px;
+    background-color: var(--accent); /* Blanco mate premium */
+    color: var(--bg-main); /* Texto oscuro para contrastar */
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover { 
-    background: linear-gradient(90deg, #15334d, #1f445f);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    background-color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 button:active {
-    transform: scale(0.97);
+    transform: translateY(0) scale(0.98);
 }
 
-/* ===== Link tipo botón (registro) ===== */
+/* ===== Link tipo botón (Registro - Estilo Secundario Sobrio) ===== */
 .reg {
     display: inline-block;
     width: 100%;
     padding: 14px;
-    margin-top: 20px;
-    border-radius: 25px;
-    background: linear-gradient(90deg, #234C6A, #32556E);
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.1rem;
+    margin-top: 14px;
+    border-radius: 8px;
+    background-color: transparent; /* Fondo transparente para no competir con el botón principal */
+    color: var(--text-main);
+    font-weight: 500;
+    font-size: 0.95rem;
     text-decoration: none;
     text-align: center;
-    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.reg:hover {
+    color: var(--text-bright);
+    background-color: rgba(255, 255, 255, 0.03); /* Brillo de fondo casi imperceptible */
+}
+
+.reg:active {
+    transform: scale(0.99);
+}
+
+#cartel {
+    color: white;
 }

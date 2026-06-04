@@ -1,83 +1,152 @@
 @font-face {
-  font-family: lexend;
-  src: url(../assets/lexend.ttf);
+    font-family: 'lexend';
+    src: url(../assets/lexend.ttf);
 }
 
+/* --- Variables Globales (Tonos oscuros y mates) --- */
+:root {
+    --bg-main: #121214;       /* Negro mate premium */
+    --bg-card: #1a1a1e;       /* Gris oscuro para elementos */
+    --accent: #ffffff;        /* Blanco puro para contrastes */
+    --text-main: #a1a1aa;     /* Gris claro para texto secundario */
+    --text-bright: #f4f4f5;   /* Blanco suave para texto principal */
+}
 
 * {
     box-sizing: border-box;
-    font-family: lexend;
+    font-family: 'lexend', sans-serif;
 }
-
-
 
 body {
     margin: 0;
-    background-color: #f2e9e4;
+    background-color: var(--bg-main);
+    color: var(--text-bright);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* --- Navegación Minimalista --- */
 nav {
     display: flex;
-    background-color: #4a4e69;
+    justify-content: center;
+    background-color: var(--bg-card);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 nav a {
-    color: white;
-    padding: 14px 16px;
+    color: var(--text-main);
+    padding: 20px 24px;
     text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
 }
 
 nav a:hover {
-    background-color: #22223b;
+    color: var(--text-bright);
+    background-color: rgba(255, 255, 255, 0.02); /* Cambio sutil al pasar el cursor */
 }
 
+/* --- Contenedor Principal --- */
 .caja {
     display: grid;
     place-items: center;
-    margin-top: 40px;
+    margin-top: 60px;
+    padding: 20px;
 }
 
+/* --- Botón Elegante y Sobrio --- */
 .boton {
     width: 200px;
-    height: 50px;
-    border-radius: 50px;
-    background-color: #22223b;
-    color: white;
+    height: 48px;
+    border-radius: 8px; /* Bordes suavizados pero más rectos */
+    background-color: var(--text-bright); /* Botón blanco que contrasta con el fondo */
+    color: var(--bg-main);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
     border: none;
-    margin: 10px;
+    margin: 12px;
     cursor: pointer;
-    transition: transform 0.1s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
+.boton:hover {
+    background-color: #ffffff;
+    transform: translateY(-2px); /* Pequeña elevación */
+}
+
+/* El botón se hunde sutilmente al hacer click */
 .boton:active {
-    transform: scale(1.1);
+    transform: translateY(0) scale(0.98);
 }
 
+/* --- La Carta Principal (Sin marcos, basada en sombras) --- */
 #carta {
     position: relative;
-    border-radius: 10px;
-    transition: transform 0.1s;
+    border-radius: 12px;
+    overflow: hidden; 
+    border: none; /* Eliminado el marco */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Sombra profunda para dar volumen */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     transform-style: preserve-3d;
+    background-color: var(--bg-card);
 }
 
+#carta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Brillo / Reflejo monocromático muy sutil */
 .glare {
     position: absolute;
     inset: 0;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%);
+    transition: opacity 0.2s ease;
+    z-index: 2;
 }
 
+/* --- Inventario y Cartas Comunes --- */
 .inventario {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 200px);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
     justify-content: center;
+    max-width: 1100px;
+    margin: 50px auto;
     padding: 20px;
+}
+
+/* Cartas del inventario impecables, sin bordes */
+.carta {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: none; /* Eliminado el marco */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s cubic-bezier(0.215, 0.610, 0.355, 1), box-shadow 0.3s ease;
+}
+
+.carta:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
 }
 
 .carta img {
     width: 100%;
     height: auto;
     display: block;
+    transition: transform 0.4s ease;
+}
+
+/* Suave zoom en la imagen al pasar el cursor */
+.carta:hover img {
+    transform: scale(1.02);
 }
