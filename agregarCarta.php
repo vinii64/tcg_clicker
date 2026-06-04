@@ -41,13 +41,14 @@ if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] == 0) {
 </head>
 <body>
 
-  <nav>
-    <a href="index.php">Inicio</a>
-    <a href="shop.php">Tienda</a>
-    <a href="biblioteca.php">Biblioteca</a>
-    <a href="logout.php">Salir</a>
-    <a href="agregarCarta.php">Agregar Carta</a>
-  </nav>
+<nav>
+  <a href="index.php">Inicio</a>
+  <a href="shop.php">Tienda</a>
+  <a href="biblioteca.php">Biblioteca</a>
+  <a href="logout.php">Salir</a>
+  <a href="agregarCarta.php">Agregar carta</a>
+  <a href="eliminarCarta.php">Eliminar carta</a>
+</nav>
 
   <form method="post" enctype="multipart/form-data">
     

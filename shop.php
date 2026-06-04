@@ -29,7 +29,8 @@
   <a href="shop.php">Tienda</a>
   <a href="biblioteca.php">Biblioteca</a>
   <a href="logout.php">Salir</a>
-  <a href="agregarCarta.php">Agregar Carta</a>
+  <a href="agregarCarta.php">Agregar carta</a>
+  <a href="eliminarCarta.php">Eliminar carta</a>
 </nav>
 
 <div class="caja">
