@@ -93,27 +93,14 @@ if($resultado['puntos'] >= 10){
          }
          $cartaAmount = $cartaAmount+1; //incrementamos el contador
 
-         $id_img = random_int(0,6); //<-- img random desde la carpeta "cartas"
 
-         //$sql = "SELECT * FROM cartas WHERE rareza = '".$rarezaCarta."' ORDER BY RAND() LIMIT 1"; //<-- id de la imagen random desde la base de datos, el resultado se filtra por rareza
-
-         //$sql = "SELECT * FROM cartas ORDER BY RAND() LIMIT 1"; //<-- id de la imagen random desde la base de datos
-
-         //id_img random desde la base de datos
-         //$resultado = mysqli_query($conexion, $sql);
-         //$fila = mysqli_fetch_assoc($resultado);
-         //$id_img = $fila['id'];
+         $sql = "SELECT * FROM cartas WHERE rareza = '".$rarezaCarta."' ORDER BY RAND() LIMIT 1"; //<-- id de la imagen random desde la base de datos, el resultado se filtra por rareza
 
          echo "<div class='carta'>
-                  <img src='cartas/".$id_img.".png' alt='Carta ".$id_img."'>
+                  <img src='data:image/jpeg;base64,".base64_encode( mysqli_fetch_assoc(mysqli_query($conexion, $sql))['imagen'])." '>
                   <p>Rareza: ".$rarezaCarta."</p>
                   <p>Edición: ".$rollCarta."</p>
                </div>";
-
       }
-
- 
    }
 }
-
-?>
