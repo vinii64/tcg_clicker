@@ -113,7 +113,7 @@ if (
 
     <a href="logout.php">Salir</a>
 </nav>
-<h1>Panel de administración.</h1>
+<div class="cartel"><h1>Panel de administración.</h1></div>
 
 <div class="agregar">
     

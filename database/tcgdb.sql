@@ -1,10 +1,9 @@
--- BASE DE DATOS ORIGINAL PARA CCG
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-06-2026 a las 01:29:16
+-- Tiempo de generación: 18-06-2026 a las 04:27:09
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -29,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cartas` (
-  `id` int(11) NOT NULL,
+  `id_carta` int(11) NOT NULL,
   `imagen` longblob NOT NULL,
   `rareza` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -66,7 +65,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `usuario`, `admin`, `contrasenia`, `puntos`) VALUES
-(43, 'admin', 'admin', 0, '21232f297a57a5a743894a0e4a801fc3', 10000);
+(43, 'admin', 'admin', 1, '21232f297a57a5a743894a0e4a801fc3', 99172);
 
 --
 -- Índices para tablas volcadas
@@ -76,7 +75,7 @@ INSERT INTO `usuarios` (`id`, `email`, `usuario`, `admin`, `contrasenia`, `punto
 -- Indices de la tabla `cartas`
 --
 ALTER TABLE `cartas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_carta`);
 
 --
 -- Indices de la tabla `inventario`
@@ -99,13 +98,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cartas`
 --
 ALTER TABLE `cartas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_carta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- Restricciones para tablas volcadas
@@ -115,7 +114,7 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  ADD CONSTRAINT `cartas_id` FOREIGN KEY (`id_carta`) REFERENCES `cartas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `cartas_id` FOREIGN KEY (`id_carta`) REFERENCES `cartas` (`id_carta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `usuario_id` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
