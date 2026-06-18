@@ -24,7 +24,20 @@
 <nav>
     <a href="index.php">Inicio</a>
     <a href="shop.php">Tienda</a>
-    <a href="biblioteca.php">Biblioteca</a> 
+
+    <?php
+    /*comprueba si es admin para mostrar biblitoeca en la navbar*/
+    $id = $_SESSION['id'];
+
+    $queryAdmin = "SELECT admin FROM usuarios WHERE id = '$id'";
+    $resultadoAdmin = mysqli_query($conexion, $queryAdmin);
+    $admin = mysqli_fetch_assoc($resultadoAdmin);
+
+    if ($admin && $admin['admin'] == 1) {
+        echo '<a href="biblioteca.php">Panel de adminstración</a>';
+    }
+    ?>
+
     <a href="logout.php">Salir</a>
 </nav>
 
@@ -37,3 +50,6 @@
 <script src="script/ajaxPuntos.js"></script>
 </body>
 </html>
+
+
+               

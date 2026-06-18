@@ -1,106 +1,107 @@
-<?php 
+<?php
 include('conexion.php');
 session_start();
+
 $id_user = $_SESSION['id'];
 
-$rarezaCarta = "";
-$rollCarta = "";
-
-//seleccionamos los puntos actuales de la bbdd
-$query2 = 'SELECT puntos FROM usuarios WHERE id = "'.$id_user.'"';
-$puntosDB = mysqli_query($conexion,$query2);
+// Seleccionamos los puntos actuales de la BBDD
+$query2 = "SELECT puntos FROM usuarios WHERE id = '$id_user'";
+$puntosDB = mysqli_query($conexion, $query2);
 $resultado = mysqli_fetch_assoc($puntosDB);
 
-//restamos el valor del paquete a los puntos y actualizamos el valor en la BBDD
-if($resultado['puntos'] >= 10){
-   $puntosActuales = $resultado['puntos']-10;
-   $query = 'UPDATE usuarios SET puntos = "'.$puntosActuales.'" WHERE id = "'.$id_user.'"';
-   $actualizacionPuntos = mysqli_query($conexion, $query);
+// Restamos el valor del paquete a los puntos y actualizamos el valor en la BBDD
+if ($resultado['puntos'] >= 10) {
 
-   //si la consulta funciono, generamos las cartas
-   if ($actualizacionPuntos) {
-      //actualizacion de boton
-      echo "<p><span id='contador'>".$puntosActuales." </span></p>
-            <button class='boton' id='comprar'>Comprar Paquete</button>";
-   
-      //generacion de 3 cartas
+    $puntosActuales = $resultado['puntos'] - 10;
 
-      echo "<div id='contenedor'>";
+    $query = "UPDATE usuarios SET puntos = '$puntosActuales' WHERE id = '$id_user'";
+    $actualizacionPuntos = mysqli_query($conexion, $query);
 
-      $cartaAmount = 0; //contador
-      while ($cartaAmount <= 2) { //cantidad de cartas en paquete (3)
-          $rareza = random_int(1, 100);
+    // Si la consulta funcionó, generamos las cartas
+    if ($actualizacionPuntos) {
 
-         switch ($rareza) {
-            case ($rareza >= 0 && $rareza <= 50): // comun
-               $rarezaCarta = "comun ";
-            break;
+        echo "
+        <p><span id='contador'>$puntosActuales</span></p>
+        <button class='boton' id='comprar'>Comprar Paquete</button>
+        ";
 
-            case ($rareza >= 51 && $rareza <= 65): // especial
-               $rarezaCarta = "especial ";
-            break;
+        echo "<div class='inventario'>";
 
-            case ($rareza >= 66 && $rareza <= 75): // epico
-               $rarezaCarta = "epico ";
-            break;
+        // Generación de 3 cartas
+        for ($cartaAmount = 0; $cartaAmount < 3; $cartaAmount++) {
 
-            case ($rareza >= 76 && $rareza <= 80): // legendary
-               $rarezaCarta = "legendario ";
-            break;
+            $rareza = random_int(1, 100);
 
-            case ($rareza >= 81 && $rareza <= 99): // mithic
-               $rarezaCarta = "mithic ";
-            break;
+            // Rareza
+            if ($rareza <= 50) {
+                $rarezaCarta = "Comín";
+            } elseif ($rareza <= 65) {
+                $rarezaCarta = "Especial";
+            } elseif ($rareza <= 75) {
+                $rarezaCarta = "Épica";
+            } elseif ($rareza <= 80) {
+                $rarezaCarta = "Legendaria";
+            } elseif ($rareza <= 99) {
+                $rarezaCarta = "Mítica";
+            } else {
+                $rarezaCarta = "Divina";
+            }
 
-            case ($rareza == 100): // divine
-               $rarezaCarta = "divine ";
-            break;
+            // Edición
+            $roll = random_int(1, 100);
 
-            default:
-               echo "error de rareza ";
-            break;
-         }
+            if ($roll <= 75) {
+                $rollCarta = "Normal";
+            } elseif ($roll <= 85) {
+                $rollCarta = "Brillante";
+            } elseif ($roll <= 92) {
+                $rollCarta = "Holográfica";
+            } elseif ($roll <= 97) {
+                $rollCarta = "Polícroma";
+            } else {
+                $rollCarta = "Negativa";
+            }
 
-         $roll = random_int(1, 100);
+            // Obtener carta aleatoria de la rareza correspondiente
+            $sql = "SELECT * FROM cartas WHERE rareza = '$rarezaCarta' ORDER BY RAND() LIMIT 1";
+            $resultadoCarta = mysqli_query($conexion, $sql);
+            $carta = mysqli_fetch_assoc($resultadoCarta);
 
-         switch ($roll) {
-            // 75% normal
-            case ($roll <= 75):
-               $rollCarta = "normal";
-               echo "<br>";
-            break;
+            if ($carta) {
+                echo "
+                
+                  <div class='carta'>
+                     <div class='carta-imagen'>
+                           <img src='data:image/jpeg;base64," . base64_encode($carta['imagen']) . "'>
+                     </div>
 
-            // 25% ediciones
-            case ($roll <= 85): // 40% de 25
-               $rollCarta = "foil";
-               echo "<br>";
-            break;
+                     <div class='carta-info'>
+                           <p>Rareza: <span>$rarezaCarta</span></p>
+                           <p>Edición: <span>$rollCarta</span></p>
+                     </div>
+                  </div>
+                
+                ";
+            } else {
+                echo "
+                <div class='carta'>
+                    <div class='carta-info'>
+                        <p>No existe ninguna carta $rarezaCarta</p>
+                    </div>
+                </div>
+                ";
+            }
+        } 
 
-            case ($roll <= 92): // +30%
-               $rollCarta = "holo";
-               echo "<br>";
-            break;
+        echo "</div>";
+    }
 
-            case ($roll <= 97): // +20%
-               $rollCarta = "polychrome";
-               echo "<br>";
-            break;
+} else {
 
-            case ($roll <= 100): // +10%
-               $rollCarta = "negative";
-               echo "<br>";
-            break;
-         }
-         $cartaAmount = $cartaAmount+1; //incrementamos el contador
-
-
-         $sql = "SELECT * FROM cartas WHERE rareza = '".$rarezaCarta."' ORDER BY RAND() LIMIT 1"; //<-- id de la imagen random desde la base de datos, el resultado se filtra por rareza
-
-         echo "<div class='carta'>
-                  <img src='data:image/jpeg;base64,".base64_encode( mysqli_fetch_assoc(mysqli_query($conexion, $sql))['imagen'])." '>
-                  <p>Rareza: ".$rarezaCarta."</p>
-                  <p>Edición: ".$rollCarta."</p>
-               </div>";
-      }
-   }
+    echo "
+    <p><span id='contador'>{$resultado['puntos']}</span></p>
+    <button class='boton' id='comprar'>Comprar Paquete</button>
+    <p>No tienes suficientes puntos.</p>
+    ";
 }
+?>

@@ -7,6 +7,18 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 
+$id = $_SESSION['id'];
+
+$queryAdmin = "SELECT admin FROM usuarios WHERE id = '$id'";
+$resultadoAdmin = mysqli_query($conexion, $queryAdmin);
+$admin = mysqli_fetch_assoc($resultadoAdmin);
+
+if (!$admin || $admin['admin'] != 1) {
+    header('Location: index.php');
+    exit();
+}
+
+
 /* AGREGAR CARTA */
 if (
     isset($_POST['accion']) &&
@@ -81,16 +93,32 @@ if (
 <nav>
     <a href="index.php">Inicio</a>
     <a href="shop.php">Tienda</a>
-    <a href="biblioteca.php">Biblioteca</a>
+
+    <?php
+    /*comprueba si es admin para mostrar biblitoeca en la navbar*/
+    $id = $_SESSION['id'];
+
+    $queryAdmin = "SELECT admin FROM usuarios WHERE id = '$id'";
+    $resultadoAdmin = mysqli_query($conexion, $queryAdmin);
+    $admin = mysqli_fetch_assoc($resultadoAdmin);
+
+    if ($admin && $admin['admin'] == 1) {
+        echo '<a href="biblioteca.php">Panel de adminstración</a>';
+    }
+    ?>
+
     <a href="logout.php">Salir</a>
 </nav>
+<h1>Panel de administración.</h1>
 
 <div class="agregar">
+    
     <form method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="accion" value="agregar">
 
         <div class="contenedor">
+            <h1>Agregar carta</h1>
             <label>Imagen de la carta:</label>
             <input type="file" name="archivo" accept="image/*" required>
 
@@ -100,16 +128,16 @@ if (
             <select name="rareza" required>
                 <option value="comun">Común</option>
                 <option value="especial">Especial</option>
-                <option value="raro">Raro</option>
-                <option value="epico">Épico</option>
-                <option value="legendario">Legendario</option>
-                <option value="mitico">Mítico</option>
-                <option value="divino">Divino</option>
+                <option value="raro">Rara</option>
+                <option value="epico">Épica</option>
+                <option value="legendario">Legendaria</option>
+                <option value="mitico">Mítica</option>
+                <option value="divino">Divina</option>
             </select>
 
             <br>
 
-            <button type="submit">Agregar carta</button>
+            <button type="submit">Agregar</button>
         </div>
 
     </form>
@@ -153,23 +181,23 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
                 </option>
 
                 <option value="raro" <?php if ($fila['rareza'] == 'raro') echo 'selected'; ?>>
-                    Raro
+                    Rara
                 </option>
 
                 <option value="epico" <?php if ($fila['rareza'] == 'epico') echo 'selected'; ?>>
-                    Épico
+                    Épica
                 </option>
 
                 <option value="legendario" <?php if ($fila['rareza'] == 'legendario') echo 'selected'; ?>>
-                    Legendario
+                    Legendaria
                 </option>
 
                 <option value="mitico" <?php if ($fila['rareza'] == 'mitico') echo 'selected'; ?>>
-                    Mítico
+                    Mítica
                 </option>
 
                 <option value="divino" <?php if ($fila['rareza'] == 'divino') echo 'selected'; ?>>
-                    Divino
+                    Divina
                 </option>
 
             </select>

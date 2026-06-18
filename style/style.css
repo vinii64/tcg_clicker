@@ -3,7 +3,7 @@
     src: url(../assets/lexend.ttf);
 }
 
-/* --- Variables Globales (Tonos oscuros y mates) --- */
+
 :root {
     --bg-main: #121214;       /* Negro mate premium */
     --bg-card: #1a1a1e;       /* Gris oscuro para elementos */
@@ -25,7 +25,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* --- Navegación Minimalista --- */
+
 nav {
     display: flex;
     justify-content: center;
@@ -47,23 +47,23 @@ nav a {
 
 nav a:hover {
     color: var(--text-bright);
-    background-color: rgba(255, 255, 255, 0.02); /* Cambio sutil al pasar el cursor */
+    background-color: rgba(255, 255, 255, 0.02);
 }
 
-/* --- Contenedor Principal --- */
+/* ---contenedor principal --- */
 .caja {
-    display: grid;
-    place-items: center;
+    width: 100%;
     margin-top: 60px;
     padding: 20px;
+    text-align: center;
 }
 
-/* --- Botón Elegante y Sobrio --- */
+
 .boton {
     width: 200px;
     height: 48px;
-    border-radius: 8px; /* Bordes suavizados pero más rectos */
-    background-color: var(--text-bright); /* Botón blanco que contrasta con el fondo */
+    border-radius: 8px; 
+    background-color: var(--text-bright); 
     color: var(--bg-main);
     font-weight: 600;
     font-size: 0.9rem;
@@ -79,8 +79,6 @@ nav a:hover {
     background-color: #ffffff;
     transform: translateY(-2px); /* Pequeña elevación */
 }
-
-/* El botón se hunde sutilmente al hacer click */
 .boton:active {
     transform: translateY(0) scale(0.98);
 }
@@ -113,40 +111,119 @@ nav a:hover {
     z-index: 2;
 }
 
-/* --- Inventario y Cartas Comunes --- */
+/* --- Inventario y Cartas --- */
 .inventario {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 32px;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    max-width: 1100px;
-    margin: 50px auto;
-    padding: 20px;
+    gap: 24px;
+    width: 100%;
+    margin-top: 30px;
 }
 
-/* Cartas del inventario impecables, sin bordes */
 .carta {
-    background-color: var(--bg-card);
-    border-radius: 12px;
+    width: 220px;
+    background: var(--bg-card);
+    border-radius: 16px;
     overflow: hidden;
-    border: none; /* Eliminado el marco */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    transition: transform 0.3s cubic-bezier(0.215, 0.610, 0.355, 1), box-shadow 0.3s ease;
+    padding: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.3);
+    transition: .25s;
 }
 
 .carta:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.5);
 }
 
 .carta img {
     width: 100%;
-    height: auto;
+    border-radius: 10px;
     display: block;
-    transition: transform 0.4s ease;
+    margin-bottom: 12px;
 }
 
-/* Suave zoom en la imagen al pasar el cursor */
-.carta:hover img {
-    transform: scale(1.02);
+.carta form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
 }
+
+.carta select {
+    background: #252525;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 8px;
+    outline: none;
+}
+
+.carta button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.carta button:hover {
+    transform: translateY(-2px);
+}
+
+/*esto agarra el primer y ultimo btoon del form*/
+.carta form:first-of-type button {
+    background: #8a0b0b;
+    color: white;
+}
+
+.carta form:last-of-type button {
+    background: #ebebeb;
+    color: rgb(0, 0, 0);
+}
+/*esto agarra el primer y ultimo btoon del form*/
+
+
+/*agregar carta en biblioteca */
+.agregar {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+.contenedor h1 {
+    text-align: center;
+    font-weight: bold;
+
+}
+.contenedor {
+    background-color:#303030;
+    padding: 20px;
+    border-radius: 12px;
+    width: 320px;
+}
+
+
+
+.contenedor input,
+.contenedor select {
+    width: 100%;
+    padding: 8px;
+
+    border-radius: 8px;
+    background: #252525;
+    color: white;
+}
+
+.contenedor button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: white;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
