@@ -150,6 +150,7 @@ nav a:hover {
     margin-top: 10px;
 }
 
+
 .carta select {
     background: #252525;
     color: white;
@@ -197,7 +198,7 @@ nav a:hover {
 
 }
 .contenedor {
-    background-color:#303030;
+    background: var(--bg-card);
     padding: 20px;
     border-radius: 12px;
     width: 320px;

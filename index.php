@@ -24,7 +24,7 @@
 <nav>
     <a href="index.php">Inicio</a>
     <a href="shop.php">Tienda</a>
-
+    <a href="inventario.php">Inventario</a>
     <?php
     /*comprueba si es admin para mostrar biblitoeca en la navbar*/
     $id = $_SESSION['id'];
@@ -34,7 +34,7 @@
     $admin = mysqli_fetch_assoc($resultadoAdmin);
 
     if ($admin && $admin['admin'] == 1) {
-        echo '<a href="biblioteca.php">Panel de adminstración</a>';
+        echo '<a href="adminPanel.php">Panel de adminstración</a>';
     }
     ?>
 

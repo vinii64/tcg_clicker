@@ -43,12 +43,16 @@ if (
 }
 
 /* ELIMINAR CARTA */
+
 if (
     isset($_POST['accion']) &&
     $_POST['accion'] == 'eliminar'
 ) {
-
+    
     $id_carta = (int)$_POST['id_carta'];
+    $consultaEliminarCartaInventario = "DELETE FROM inventario WHERE id_carta = $id_carta";
+
+    mysqli_query($conexion,$consultaEliminarCartaInventario);
 
     $sql = "DELETE FROM cartas WHERE id_carta = $id_carta";
 
@@ -85,7 +89,7 @@ if (
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrar Cartas</title>
+    <title>Panel de admin.</title>
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
@@ -93,7 +97,7 @@ if (
 <nav>
     <a href="index.php">Inicio</a>
     <a href="shop.php">Tienda</a>
-
+    <a href="inventario.php">Inventario</a>
     <?php
     /*comprueba si es admin para mostrar biblitoeca en la navbar*/
     $id = $_SESSION['id'];
@@ -103,7 +107,7 @@ if (
     $admin = mysqli_fetch_assoc($resultadoAdmin);
 
     if ($admin && $admin['admin'] == 1) {
-        echo '<a href="biblioteca.php">Panel de adminstración</a>';
+        echo '<a href="adminPanel.php">Panel de adminstración</a>';
     }
     ?>
 
@@ -126,12 +130,12 @@ if (
 
             <label>Rareza:</label>
             <select name="rareza" required>
-                <option value="comun">Común</option>
+                <option value="comun">Comun</option>
                 <option value="especial">Especial</option>
                 <option value="raro">Rara</option>
-                <option value="epico">Épica</option>
+                <option value="epico">Epica</option>
                 <option value="legendario">Legendaria</option>
-                <option value="mitico">Mítica</option>
+                <option value="mitico">Mitica</option>
                 <option value="divino">Divina</option>
             </select>
 
@@ -173,7 +177,7 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
             <select name="rareza">
 
                 <option value="comun" <?php if ($fila['rareza'] == 'comun') echo 'selected'; ?>>
-                    Común
+                    Comun
                 </option>
 
                 <option value="especial" <?php if ($fila['rareza'] == 'especial') echo 'selected'; ?>>
@@ -185,7 +189,7 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
                 </option>
 
                 <option value="epico" <?php if ($fila['rareza'] == 'epico') echo 'selected'; ?>>
-                    Épica
+                    Epica
                 </option>
 
                 <option value="legendario" <?php if ($fila['rareza'] == 'legendario') echo 'selected'; ?>>
@@ -193,7 +197,7 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
                 </option>
 
                 <option value="mitico" <?php if ($fila['rareza'] == 'mitico') echo 'selected'; ?>>
-                    Mítica
+                    Mitica
                 </option>
 
                 <option value="divino" <?php if ($fila['rareza'] == 'divino') echo 'selected'; ?>>

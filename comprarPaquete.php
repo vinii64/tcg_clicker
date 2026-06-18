@@ -34,17 +34,17 @@ if ($resultado['puntos'] >= 10) {
 
             // Rareza
             if ($rareza <= 50) {
-                $rarezaCarta = "Comín";
+                $rarezaCarta = "comun";
             } elseif ($rareza <= 65) {
-                $rarezaCarta = "Especial";
+                $rarezaCarta = "especial";
             } elseif ($rareza <= 75) {
-                $rarezaCarta = "Épica";
+                $rarezaCarta = "epico";
             } elseif ($rareza <= 80) {
-                $rarezaCarta = "Legendaria";
+                $rarezaCarta = "legendario";
             } elseif ($rareza <= 99) {
-                $rarezaCarta = "Mítica";
+                $rarezaCarta = "mitico";
             } else {
-                $rarezaCarta = "Divina";
+                $rarezaCarta = "divino";
             }
 
             // Edición
@@ -55,17 +55,59 @@ if ($resultado['puntos'] >= 10) {
             } elseif ($roll <= 85) {
                 $rollCarta = "Brillante";
             } elseif ($roll <= 92) {
-                $rollCarta = "Holográfica";
+                $rollCarta = "Holografica";
             } elseif ($roll <= 97) {
-                $rollCarta = "Polícroma";
+                $rollCarta = "Policroma";
             } else {
                 $rollCarta = "Negativa";
             }
 
-            // Obtener carta aleatoria de la rareza correspondiente
+            // bbtener carta aleatoria de la rareza correspondiente
             $sql = "SELECT * FROM cartas WHERE rareza = '$rarezaCarta' ORDER BY RAND() LIMIT 1";
             $resultadoCarta = mysqli_query($conexion, $sql);
             $carta = mysqli_fetch_assoc($resultadoCarta);
+            if (!$carta) {
+                echo "
+                <div class='carta'>
+                    <div class='carta-info'>
+                        <p>No existe ninguna carta $rarezaCarta</p>
+                    </div>
+                </div>
+                ";
+                continue;
+            }
+            $idCarta = $carta['id_carta'];
+
+            $sqlInventario = "SELECT * FROM inventario WHERE id_usuario = '$id_user' AND id_carta = '$idCarta'";
+
+            $resultadoInventario = mysqli_query($conexion, $sqlInventario);
+
+            $consultaContadorCarta = "UPDATE inventario SET cantidad = cantidad + 1 WHERE id_usuario = '$id_user' AND id_carta = '$idCarta'";
+
+            $consultaAgregarCarta = "INSERT INTO inventario (id_usuario, id_carta, cantidad) VALUES ('$id_user', '$idCarta', 1)";
+
+            if (mysqli_num_rows($resultadoInventario) > 0) {
+
+                mysqli_query($conexion, $consultaContadorCarta);
+
+            } else {
+
+                mysqli_query($conexion, $consultaAgregarCarta);
+
+            }
+
+            $resultadoInventario = mysqli_query($conexion, $sqlInventario);
+
+
+            $rarezaMostrar = [
+                "comun" => "Común",
+                "especial" => "Especial",
+                "epico" => "Épica",
+                "legendario" => "Legendaria",
+                "mitico" => "Mítica",
+                "divino" => "Divina"
+            ];
+
 
             if ($carta) {
                 echo "
@@ -76,7 +118,7 @@ if ($resultado['puntos'] >= 10) {
                      </div>
 
                      <div class='carta-info'>
-                           <p>Rareza: <span>$rarezaCarta</span></p>
+                           <p>Rareza: <span>{$rarezaMostrar[$rarezaCarta]}</span></p>
                            <p>Edición: <span>$rollCarta</span></p>
                      </div>
                   </div>
