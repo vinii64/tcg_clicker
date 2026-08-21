@@ -1,0 +1,26 @@
+$kind: http-request
+name: POST Crear Usuario
+method: POST
+url: '{{base_url}}?recurso=usuarios'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "usuario": "test_user",
+      "email": "test@example.com",
+      "contrasenia": "123456"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is valid JSON", function () {
+          pm.response.to.be.json;
+      });

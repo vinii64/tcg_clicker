@@ -1,0 +1,24 @@
+$kind: http-request
+name: DELETE Eliminar Usuario
+method: DELETE
+url: '{{base_url}}?recurso=usuarios'
+order: 4000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "id": 1
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is valid JSON", function () {
+          pm.response.to.be.json;
+      });

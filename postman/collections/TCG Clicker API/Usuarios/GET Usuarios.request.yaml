@@ -1,0 +1,15 @@
+$kind: http-request
+name: GET Usuarios
+method: GET
+url: '{{base_url}}?recurso=usuarios'
+order: 1000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is valid JSON", function () {
+          pm.response.to.be.json;
+      });

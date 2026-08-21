@@ -1,0 +1,5 @@
+$kind: collection
+name: TCG Clicker API
+variables:
+  - key: base_url
+    value: 'http://localhost/tcg_clicker/api.php'

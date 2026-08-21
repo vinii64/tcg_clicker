@@ -1,0 +1,24 @@
+$kind: http-request
+name: POST Crear Carta
+method: POST
+url: '{{base_url}}?recurso=cartas'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "rareza": "comun"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response is valid JSON", function () {
+          pm.response.to.be.json;
+      });
