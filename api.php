@@ -1,33 +1,20 @@
 <?php
 
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=UTF-8");
 
-// =====================================
-// CONEXIÓN A LA BASE DE DATOS
-// =====================================
-
-include('conexion.php');
-
+include("conexion.php");
 
 if (!$conexion) {
-
     http_response_code(500);
-
     echo json_encode([
         "error" => "Error de conexión"
     ]);
-
     exit;
 }
 
 mysqli_set_charset($conexion, "utf8");
 
-// =====================================
-// DATOS DE LA PETICIÓN
-// =====================================
-
 $metodo = $_SERVER["REQUEST_METHOD"];
-
 $recurso = $_GET["recurso"] ?? "";
 
 $datos = json_decode(
@@ -35,299 +22,802 @@ $datos = json_decode(
     true
 );
 
-// =====================================
-// CRUD
-// =====================================
-
-switch ($metodo) {
-
-    // =================================
-    // GET
-    // =================================
-
-    case "GET":
-
-        switch ($recurso) {
-
-            case "usuarios":
-
-                $sql = "SELECT * FROM usuarios";
-
-                $resultado = mysqli_query(
-                    $conexion,
-                    $sql
-                );
-
-                $usuarios = [];
-
-                while ($fila = mysqli_fetch_assoc($resultado)) {
-
-                    $usuarios[] = $fila;
-                }
-
-                echo json_encode($usuarios);
-
-                break;
-
-
-            case "cartas":
-
-                $sql = "SELECT * FROM cartas";
-
-                $resultado = mysqli_query(
-                    $conexion,
-                    $sql
-                );
-
-                $cartas = [];
-
-                while ($fila = mysqli_fetch_assoc($resultado)) {
-
-                    $cartas[] = $fila;
-                }
-
-                echo json_encode($cartas);
-
-                break;
-
-
-            default:
-
-                http_response_code(400);
-
-                echo json_encode([
-                    "error" => "Recurso no válido"
-                ]);
-
-                break;
-        }
-
-        break;
-
-
-    // =================================
-    // POST
-    // =================================
-
-    case "POST":
-
-        switch ($recurso) {
-
-            case "usuarios":
-
-                $usuario = $datos["usuario"];
-                $email = $datos["email"];
-                $contrasenia = $datos["contrasenia"];
-
-                $sql = "INSERT INTO usuarios (usuario, email, contrasenia) VALUES ('$usuario', '$email', '$contrasenia')";
-
-                $resultado = mysqli_query(
-                    $conexion,
-                    $sql
-                );
-
-                if ($resultado) {
-
-                    echo json_encode([
-                        "mensaje" => "Usuario creado correctamente"
-                    ]);
-
-                } else {
-
-                    http_response_code(500);
-
-                    echo json_encode([
-                        "error" => "No se pudo crear el usuario"
-                    ]);
-                }
-
-                break;
-
-//PONER PARA SUBIR FOTOS DE CARTA API BLOB CHATGPT 
-
-            case "cartas":
-
-                $rareza = $datos["rareza"];
-
-
-                $sql = "INSERT INTO cartas (rareza) VALUES ('$rareza')";
-
-                $resultado = mysqli_query(
-                    $conexion,
-                    $sql
-                );
-
-                if ($resultado) {
-
-                    echo json_encode([
-                        "mensaje" => "carta creada correctamente"
-                    ]);
-
-                } else {
-
-                    http_response_code(500);
-
-                    echo json_encode([
-                        "error" => "no se pudo crear la carta"
-                    ]);
-                }
-
-                break;
-
-
-            default:
-
-                http_response_code(400);
-
-                echo json_encode([
-                    "error" => "Recurso no válido"
-                ]);
-
-                break;
-        }
-
-        break;
-
-
-    // =================================
-    // PUT
-    // =================================
-
-    case "PUT":
-
-        switch ($recurso) {
-
-            case "usuarios":
-
-                $id = $datos["id"];
-                $nombre = $datos["nombre"];
-                $email = $datos["email"];
-                $puntos = $datos["puntos"];
-
-                $sql = "UPDATE usuarios SET nombre = '$nombre', email = '$email', puntos = '$puntos' WHERE id = $id";
-
-                $resultado = mysqli_query(
-                    $conexion,
-                    $sql
-                );
-
-                echo json_encode([
-                    "mensaje" => "usuario actualizado correctamente"
-                ]);
-
-                break;
-
-
-            case "cartas":
-
-                $id = $datos["id"];
-                $rareza = $datos["rareza"];
-
-
-                $sql = "UPDATE cartas SET rareza = '$rareza' WHERE id = $id";
-
-                $resultado = mysqli_query(
-                    $conexion,
-                    $sql
-                );
-
-                echo json_encode([
-                    "mensaje" => "carta actualizada correctamente"
-                ]);
-
-                break;
-
-
-            default:
-
-                http_response_code(400);
-
-                echo json_encode([
-                    "error" => "Recurso no válido"
-                ]);
-
-                break;
-        }
-
-        break;
-
-
-    // =================================
-    // DELETE
-    // =================================
-
-    case "DELETE":
-
-        switch ($recurso) {
-
-            case "usuarios":
-
-                $id = $datos["id"];
-
-                $sql = "DELETE FROM usuarios WHERE id = $id";
-
-                $resultado = mysqli_query(
-                    $conexion,
-                    $sql
-                );
-
-                echo json_encode([
-                    "mensaje" => "usuario eliminado correctamente"
-                ]);
-
-                break;
-
-
-            case "cartas":
-
-                $id = $datos["id"];
-
-                $sql = "DELETE FROM cartas WHERE id = $id";
-
-                $resultado = mysqli_query(
-                    $conexion,
-                    $sql
-                );
-
-                echo json_encode([
-                    "mensaje" => "Producto eliminado correctamente"
-                ]);
-
-                break;
-
-
-            default:
-
-                http_response_code(400);
-
-                echo json_encode([
-                    "error" => "Recurso no válido"
-                ]);
-
-                break;
-        }
-
-        break;
-
-
-    // =================================
-    // MÉTODO NO PERMITIDO
-    // =================================
-
-    default:
-
-        http_response_code(405);
-
-        echo json_encode([
-            "error" => "Método no permitido"
-        ]);
-
-        break;
+if (!is_array($datos)) {
+    $datos = [];
 }
 
-// =====================================
-// CERRAR CONEXIÓN
-// =====================================
+
+/*
+====================================================
+GET
+====================================================
+*/
+
+if ($metodo === "GET") {
+
+    // ================================================
+    // USUARIOS
+    // ================================================
+
+    if ($recurso === "usuarios") {
+
+        if (isset($_GET["id"])) {
+
+            $id = intval($_GET["id"]);
+
+            $sql = "SELECT id, email, usuario, admin, contrasenia, puntos
+                    FROM usuarios
+                    WHERE id = $id";
+
+        } else {
+
+            $sql = "SELECT id, email, usuario, admin, contrasenia, puntos
+                    FROM usuarios";
+        }
+
+        $resultado = mysqli_query($conexion, $sql);
+
+        if (!$resultado) {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+
+            exit;
+        }
+
+        $usuarios = [];
+
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $usuarios[] = $fila;
+        }
+
+        echo json_encode($usuarios);
+
+        exit;
+    }
+
+
+    // ================================================
+    // CARTAS
+    // ================================================
+
+    if ($recurso === "cartas") {
+
+        if (isset($_GET["id_carta"])) {
+
+            $id_carta = intval($_GET["id_carta"]);
+
+            $sql = "SELECT id_carta, rareza
+                    FROM cartas
+                    WHERE id_carta = $id_carta";
+
+        } else {
+
+            $sql = "SELECT id_carta, rareza
+                    FROM cartas";
+        }
+
+        $resultado = mysqli_query($conexion, $sql);
+
+        if (!$resultado) {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+
+            exit;
+        }
+
+        $cartas = [];
+
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $cartas[] = $fila;
+        }
+
+        echo json_encode($cartas);
+
+        exit;
+    }
+
+
+    // ================================================
+    // INVENTARIO
+    // ================================================
+
+    if ($recurso === "inventario") {
+
+        $id_usuario = $_GET["id_usuario"] ?? null;
+        $id_carta = $_GET["id_carta"] ?? null;
+
+
+        // Usuario + carta
+        if ($id_usuario !== null && $id_carta !== null) {
+
+            $id_usuario = intval($id_usuario);
+            $id_carta = intval($id_carta);
+
+            $sql = "SELECT id_carta, id_usuario, cantidad
+                    FROM inventario
+                    WHERE id_usuario = $id_usuario
+                    AND id_carta = $id_carta";
+        }
+
+
+        // Solo usuario
+        elseif ($id_usuario !== null) {
+
+            $id_usuario = intval($id_usuario);
+
+            $sql = "SELECT id_carta, id_usuario, cantidad
+                    FROM inventario
+                    WHERE id_usuario = $id_usuario";
+        }
+
+
+        // Solo carta
+        elseif ($id_carta !== null) {
+
+            $id_carta = intval($id_carta);
+
+            $sql = "SELECT id_carta, id_usuario, cantidad
+                    FROM inventario
+                    WHERE id_carta = $id_carta";
+        }
+
+
+        // Todo
+        else {
+
+            $sql = "SELECT id_carta, id_usuario, cantidad
+                    FROM inventario";
+        }
+
+
+        $resultado = mysqli_query($conexion, $sql);
+
+        if (!$resultado) {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+
+            exit;
+        }
+
+        $inventario = [];
+
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $inventario[] = $fila;
+        }
+
+        echo json_encode($inventario);
+
+        exit;
+    }
+
+
+    // Recurso incorrecto
+    http_response_code(400);
+
+    echo json_encode([
+        "error" => "Recurso no válido"
+    ]);
+
+    exit;
+}
+
+
+/*
+====================================================
+POST
+====================================================
+*/
+
+if ($metodo === "POST") {
+
+
+    // ================================================
+    // CREAR USUARIO
+    // ================================================
+
+    if ($recurso === "usuarios") {
+
+        if (
+            !isset($datos["email"]) ||
+            !isset($datos["usuario"]) ||
+            !isset($datos["contrasenia"])
+        ) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                "error" => "Faltan datos"
+            ]);
+
+            exit;
+        }
+
+        $email = $datos["email"];
+        $usuario = $datos["usuario"];
+        $admin = $datos["admin"] ?? 0;
+        $contrasenia = $datos["contrasenia"];
+        $puntos = $datos["puntos"] ?? 0;
+
+
+        $stmt = mysqli_prepare(
+            $conexion,
+            "INSERT INTO usuarios
+            (email, usuario, admin, contrasenia, puntos)
+            VALUES (?, ?, ?, ?, ?)"
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "ssisi",
+            $email,
+            $usuario,
+            $admin,
+            $contrasenia,
+            $puntos
+        );
+
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            http_response_code(201);
+
+            echo json_encode([
+                "mensaje" => "Usuario creado correctamente",
+                "id" => mysqli_insert_id($conexion)
+            ]);
+
+        } else {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+        }
+
+        exit;
+    }
+
+
+    // ================================================
+    // CREAR CARTA
+    // ================================================
+
+    if ($recurso === "cartas") {
+
+        if (!isset($datos["rareza"])) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                "error" => "Falta rareza"
+            ]);
+
+            exit;
+        }
+
+        $rareza = $datos["rareza"];
+
+
+        $stmt = mysqli_prepare(
+            $conexion,
+            "INSERT INTO cartas (rareza)
+             VALUES (?)"
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "s",
+            $rareza
+        );
+
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            http_response_code(201);
+
+            echo json_encode([
+                "mensaje" => "Carta creada correctamente",
+                "id_carta" => mysqli_insert_id($conexion)
+            ]);
+
+        } else {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+        }
+
+        exit;
+    }
+
+
+    // ================================================
+    // CREAR INVENTARIO
+    // ================================================
+
+    if ($recurso === "inventario") {
+
+        if (
+            !isset($datos["id_carta"]) ||
+            !isset($datos["id_usuario"]) ||
+            !isset($datos["cantidad"])
+        ) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                "error" => "Faltan datos"
+            ]);
+
+            exit;
+        }
+
+        $id_carta = $datos["id_carta"];
+        $id_usuario = $datos["id_usuario"];
+        $cantidad = $datos["cantidad"];
+
+
+        $stmt = mysqli_prepare(
+            $conexion,
+            "INSERT INTO inventario
+            (id_carta, id_usuario, cantidad)
+            VALUES (?, ?, ?)"
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "iii",
+            $id_carta,
+            $id_usuario,
+            $cantidad
+        );
+
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            http_response_code(201);
+
+            echo json_encode([
+                "mensaje" => "Inventario creado correctamente"
+            ]);
+
+        } else {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+        }
+
+        exit;
+    }
+
+
+    http_response_code(400);
+
+    echo json_encode([
+        "error" => "Recurso no válido"
+    ]);
+
+    exit;
+}
+
+
+/*
+====================================================
+PUT
+====================================================
+*/
+
+if ($metodo === "PUT") {
+
+
+    // ================================================
+    // ACTUALIZAR USUARIO
+    // ================================================
+
+    if ($recurso === "usuarios") {
+
+        if (!isset($datos["id"])) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                "error" => "Falta id"
+            ]);
+
+            exit;
+        }
+
+        $id = intval($datos["id"]);
+
+        $email = $datos["email"] ?? "";
+        $usuario = $datos["usuario"] ?? "";
+        $admin = $datos["admin"] ?? 0;
+        $contrasenia = $datos["contrasenia"] ?? "";
+        $puntos = $datos["puntos"] ?? 0;
+
+
+        $stmt = mysqli_prepare(
+            $conexion,
+            "UPDATE usuarios
+             SET email = ?,
+                 usuario = ?,
+                 admin = ?,
+                 contrasenia = ?,
+                 puntos = ?
+             WHERE id = ?"
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "ssisii",
+            $email,
+            $usuario,
+            $admin,
+            $contrasenia,
+            $puntos,
+            $id
+        );
+
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            echo json_encode([
+                "mensaje" => "Usuario actualizado correctamente"
+            ]);
+
+        } else {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+        }
+
+        exit;
+    }
+
+
+    // ================================================
+    // ACTUALIZAR CARTA
+    // ================================================
+
+    if ($recurso === "cartas") {
+
+        if (
+            !isset($datos["id_carta"]) ||
+            !isset($datos["rareza"])
+        ) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                "error" => "Faltan datos"
+            ]);
+
+            exit;
+        }
+
+        $id_carta = intval($datos["id_carta"]);
+        $rareza = $datos["rareza"];
+
+
+        $stmt = mysqli_prepare(
+            $conexion,
+            "UPDATE cartas
+             SET rareza = ?
+             WHERE id_carta = ?"
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "si",
+            $rareza,
+            $id_carta
+        );
+
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            echo json_encode([
+                "mensaje" => "Carta actualizada correctamente"
+            ]);
+
+        } else {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+        }
+
+        exit;
+    }
+
+
+    // ================================================
+    // ACTUALIZAR INVENTARIO
+    // ================================================
+
+    if ($recurso === "inventario") {
+
+        if (
+            !isset($datos["id_carta"]) ||
+            !isset($datos["id_usuario"]) ||
+            !isset($datos["cantidad"])
+        ) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                "error" => "Faltan datos"
+            ]);
+
+            exit;
+        }
+
+        $id_carta = intval($datos["id_carta"]);
+        $id_usuario = intval($datos["id_usuario"]);
+        $cantidad = intval($datos["cantidad"]);
+
+
+        $stmt = mysqli_prepare(
+            $conexion,
+            "UPDATE inventario
+             SET cantidad = ?
+             WHERE id_carta = ?
+             AND id_usuario = ?"
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "iii",
+            $cantidad,
+            $id_carta,
+            $id_usuario
+        );
+
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            echo json_encode([
+                "mensaje" => "Inventario actualizado correctamente"
+            ]);
+
+        } else {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+        }
+
+        exit;
+    }
+
+
+    http_response_code(400);
+
+    echo json_encode([
+        "error" => "Recurso no válido"
+    ]);
+
+    exit;
+}
+
+
+/*
+====================================================
+DELETE
+====================================================
+*/
+
+if ($metodo === "DELETE") {
+
+
+    // ================================================
+    // ELIMINAR USUARIO
+    // ================================================
+
+    if ($recurso === "usuarios") {
+
+        if (!isset($datos["id"])) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                "error" => "Falta id"
+            ]);
+
+            exit;
+        }
+
+        $id = intval($datos["id"]);
+
+
+        $stmt = mysqli_prepare(
+            $conexion,
+            "DELETE FROM usuarios
+             WHERE id = ?"
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "i",
+            $id
+        );
+
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            echo json_encode([
+                "mensaje" => "Usuario eliminado correctamente"
+            ]);
+
+        } else {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+        }
+
+        exit;
+    }
+
+
+    // ================================================
+    // ELIMINAR CARTA
+    // ================================================
+
+    if ($recurso === "cartas") {
+
+        if (!isset($datos["id_carta"])) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                "error" => "Falta id_carta"
+            ]);
+
+            exit;
+        }
+
+        $id_carta = intval($datos["id_carta"]);
+
+
+        $stmt = mysqli_prepare(
+            $conexion,
+            "DELETE FROM cartas
+             WHERE id_carta = ?"
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "i",
+            $id_carta
+        );
+
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            echo json_encode([
+                "mensaje" => "Carta eliminada correctamente"
+            ]);
+
+        } else {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+        }
+
+        exit;
+    }
+
+
+    // ================================================
+    // ELIMINAR INVENTARIO
+    // ================================================
+
+    if ($recurso === "inventario") {
+
+        if (
+            !isset($datos["id_carta"]) ||
+            !isset($datos["id_usuario"])
+        ) {
+
+            http_response_code(400);
+
+            echo json_encode([
+                "error" => "Faltan id_carta o id_usuario"
+            ]);
+
+            exit;
+        }
+
+        $id_carta = intval($datos["id_carta"]);
+        $id_usuario = intval($datos["id_usuario"]);
+
+
+        $stmt = mysqli_prepare(
+            $conexion,
+            "DELETE FROM inventario
+             WHERE id_carta = ?
+             AND id_usuario = ?"
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "ii",
+            $id_carta,
+            $id_usuario
+        );
+
+
+        if (mysqli_stmt_execute($stmt)) {
+
+            echo json_encode([
+                "mensaje" => "Inventario eliminado correctamente"
+            ]);
+
+        } else {
+
+            http_response_code(500);
+
+            echo json_encode([
+                "error" => mysqli_error($conexion)
+            ]);
+        }
+
+        exit;
+    }
+
+
+    http_response_code(400);
+
+    echo json_encode([
+        "error" => "Recurso no válido"
+    ]);
+
+    exit;
+}
+
+
+/*
+====================================================
+MÉTODO NO PERMITIDO
+====================================================
+*/
+
+http_response_code(405);
+
+echo json_encode([
+    "error" => "Método no permitido"
+]);
 
 mysqli_close($conexion);
 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios</title>
+</head>
+<body>
+
+    <h1>Lista de usuarios</h1>
+
+    <div id="resultado"></div>
+
+    <script>
+        fetch("api.php?recurso=usuarios")
+            .then(respuesta => respuesta.json())
+            .then(datos => {
+
+                console.log(datos);
+
+                let resultado = document.getElementById("resultado");
+
+                datos.forEach(usuario => {
+                    resultado.innerHTML += `
+                        <p>
+                            ID: ${usuario.id} <br>
+                            Nombre: ${usuario.usuario} <br>
+                            Email: ${usuario.email}
+                        </p>
+                        <hr>
+                    `;
+                });
+
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+
+   
+
+        fetch("api.php?recurso=cartas")
+            .then(respuesta => respuesta.json())
+            .then(datos => {
+
+                console.log(datos);
+
+                let resultado = document.getElementById("resultado");
+
+                datos.forEach(cartas => {
+                    resultado.innerHTML += `
+                        <p>
+                            ID: ${cartas.id_carta} <br>
+                            Rareza: ${cartas.rareza} <br>
+                            Imagen: ${cartas.imagen} <br>
+                        </p>
+                        <hr>
+                    `;
+                });
+
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+
+
+
+        fetch("api.php?recurso=inventario")
+            .then(respuesta => respuesta.json())
+            .then(datos => {
+
+                console.log(datos);
+
+                let resultado = document.getElementById("resultado");
+
+                datos.forEach(inventario => {
+                    resultado.innerHTML += `
+                        <p>
+                            ID usuario: ${inventario.id_usuario} <br>
+                            ID carta: ${inventario.id_carta} <br>
+                            Cantidad: ${inventario.cantidad} <br>
+                        </p>
+                        <hr>
+                    `;
+                });
+
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    </script>
+
+</body>
+</html>
