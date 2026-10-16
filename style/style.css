@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 @font-face {
   font-family: lexend;
   src: url(../assets/lexend.ttf);
@@ -67,3 +68,410 @@ nav a:hover {
     pointer-events: none;
     transition: opacity 0.2s;
 }
+=======
+@font-face {
+    font-family: 'lexend';
+    src: url(../assets/lexend.ttf);
+}
+
+
+:root {
+    --bg-main: #121214;       /* Negro mate premium */
+    --bg-card: #1a1a1e;       /* Gris oscuro para elementos */
+    --accent: #ffffff;        /* Blanco puro para contrastes */
+    --text-main: #a1a1aa;     /* Gris claro para texto secundario */
+    --text-bright: #f4f4f5;   /* Blanco suave para texto principal */
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'lexend', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg-main);
+    color: var(--text-bright);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-card);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav a {
+    color: var(--text-main);
+    padding: 20px 24px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+nav a:hover {
+    color: var(--text-bright);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ---contenedor principal --- */
+.caja {
+    width: 100%;
+    margin-top: 60px;
+    padding: 20px;
+    text-align: center;
+}
+
+
+.boton {
+    width: 200px;
+    height: 48px;
+    border-radius: 8px; 
+    background-color: var(--text-bright); 
+    color: var(--bg-main);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    border: none;
+    margin: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.boton:hover {
+    background-color: #ffffff;
+    transform: translateY(-2px); /* Pequeña elevación */
+}
+.boton:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* --- La Carta Principal (Sin marcos, basada en sombras) --- */
+#carta {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden; 
+    border: none; /* Eliminado el marco */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Sombra profunda para dar volumen */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transform-style: preserve-3d;
+    background-color: var(--bg-card);
+}
+
+#carta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Brillo / Reflejo monocromático muy sutil */
+.glare {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%);
+    transition: opacity 0.2s ease;
+    z-index: 2;
+}
+
+/* --- Inventario y Cartas --- */
+.inventario {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.carta {
+    width: 220px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.3);
+    transition: .25s;
+}
+
+.carta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.5);
+}
+
+.carta img {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.carta form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+
+.carta select {
+    background: #252525;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 8px;
+    outline: none;
+}
+
+.carta button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.carta button:hover {
+    transform: translateY(-2px);
+}
+
+/*esto agarra el primer y ultimo btoon del form*/
+.carta form:first-of-type button {
+    background: #8a0b0b;
+    color: white;
+}
+
+.carta form:last-of-type button {
+    background: #ebebeb;
+    color: rgb(0, 0, 0);
+}
+/*esto agarra el primer y ultimo btoon del form*/
+
+
+/*agregar carta en biblioteca */
+.agregar {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+.contenedor h1 {
+    text-align: center;
+    font-weight: bold;
+
+}
+.contenedor {
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: 12px;
+    width: 320px;
+}
+
+
+
+.contenedor input,
+.contenedor select {
+    width: 100%;
+    padding: 8px;
+
+    border-radius: 8px;
+    background: #252525;
+    color: white;
+}
+
+.contenedor button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: white;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cartel{
+    text-align: center;
+}
+
+/* =====================================================
+   RESPONSIVE - solo afecta a pantallas chicas.
+   En PC (más de 768px) no cambia nada.
+   ===================================================== */
+
+/* En PC los elementos del menú móvil no existen */
+#menu-toggle,
+.hamburguesa,
+.menu-overlay {
+    display: none;
+}
+
+/* Táctil: evita que los efectos hover queden "pegados" al tocar */
+@media (hover: none) {
+    .boton:hover,
+    #carta:hover,
+    .carta:hover,
+    .carta button:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* ---------- Menú lateral ---------- */
+    body {
+        padding-top: 64px; /* espacio para el botón hamburguesa */
+    }
+
+    .hamburguesa {
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background-color: var(--bg-card);
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        z-index: 400; /* siempre por encima del menú */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+        /* raya del medio */
+        background-image: linear-gradient(var(--text-bright), var(--text-bright));
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 22px 2px;
+    }
+
+    /* rayas de arriba y abajo */
+    .hamburguesa::before,
+    .hamburguesa::after {
+        content: "";
+        position: absolute;
+        left: 11px;
+        width: 22px;
+        height: 2px;
+        border-radius: 2px;
+        background-color: var(--text-bright);
+    }
+
+    .hamburguesa::before { top: 14px; }
+    .hamburguesa::after  { top: 28px; }
+
+    /* El nav pasa a ser un panel que sale desde la izquierda */
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        height: 100dvh;
+        width: 260px;
+        max-width: 80%;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 70px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+        z-index: 300;
+        overflow-y: auto;
+    }
+
+    nav a {
+        display: block;
+        padding: 16px 24px;
+        font-size: 1rem;
+    }
+
+    /* Fondo oscuro detrás del menú (tocarlo lo cierra) */
+    .menu-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 250;
+    }
+
+    #menu-toggle:checked ~ nav {
+        transform: translateX(0);
+    }
+
+    #menu-toggle:checked ~ .menu-overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* ---------- Contenido ---------- */
+    .caja {
+        margin-top: 16px;
+        padding: 16px;
+    }
+
+    .boton {
+        display: block;
+        width: 100%;
+        max-width: 320px;
+        margin: 10px auto;
+    }
+
+    #carta {
+        max-width: 100%;
+    }
+
+    #carta img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* ---------- Grid de cartas: 2 columnas ---------- */
+    .inventario {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        padding: 0 12px;
+        margin-top: 20px;
+    }
+
+    .carta {
+        width: 100%;
+        min-width: 0;
+        padding: 10px;
+    }
+
+    .carta select,
+    .carta button {
+        width: 100%;
+        font-size: 0.85rem;
+    }
+
+    /* ---------- Formulario agregar ---------- */
+    .agregar {
+        margin: 24px 12px;
+    }
+
+    .contenedor {
+        width: 100%;
+        max-width: 420px;
+    }
+
+    /* 16px evita el zoom automático de iOS al escribir */
+    .contenedor input,
+    .contenedor select {
+        font-size: 16px;
+    }
+}
+>>>>>>> Stashed changes

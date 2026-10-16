@@ -96,3 +96,65 @@ button:active {
     text-align: center;
     transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
+<<<<<<< Updated upstream
+=======
+
+.reg:hover {
+    color: var(--text-bright);
+    background-color: rgba(255, 255, 255, 0.03); /* Brillo de fondo casi imperceptible */
+}
+
+.reg:active {
+    transform: scale(0.99);
+}
+
+#cartel {
+    color: white;
+}
+
+/* =====================================================
+   RESPONSIVE - solo afecta a pantallas chicas.
+   En PC (más de 768px) no cambia nada.
+   ===================================================== */
+
+@media (hover: none) {
+    button:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh; /* respeta la barra del navegador móvil */
+        padding: 20px 0;
+    }
+
+    .login-container {
+        width: 92%;
+        padding: 36px 24px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    /* 16px evita el zoom automático de iOS al escribir */
+    input {
+        font-size: 16px;
+        padding: 14px 16px;
+    }
+}
+
+@media (max-width: 380px) {
+    .login-container {
+        padding: 28px 18px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+}
+>>>>>>> Stashed changes
