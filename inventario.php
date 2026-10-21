@@ -28,6 +28,7 @@ $resultado = mysqli_query($conexion, $sql);
     <a href="index.php">Inicio</a>
     <a href="shop.php">Tienda</a>
     <a href="inventario.php">Inventario</a>
+    <a href="intercambios.php">Intercambios</a>
     <?php
     /*comprueba si es admin para mostrar biblitoeca en la navbar*/
     $id = $_SESSION['id'];

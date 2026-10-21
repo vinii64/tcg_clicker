@@ -60,3 +60,11 @@ Negative → 98–100 (3%)
 https://uiverse.io/dylanharriscameron/tiny-shrimp-95 efecto 3d
 
 
+
+
+## Intercambios entre usuarios
+1. Importar `sql/intercambios.sql` en la base `tcgdb` (crea `intercambios` e `intercambio_cartas`).
+2. Archivos nuevos: `intercambios.php` (recibidas / enviadas / historial / elegir usuario), `proponer.php` (armar propuesta),
+   `trade_lib.php` (lógica), `carta_img.php` (imagen de una carta), `nav.php` (navbar con aviso de propuestas pendientes).
+3. Flujo: A elige usuario -> marca cartas que ofrece y cartas que pide -> B acepta / rechaza, A puede cancelar.
+   Al aceptar se revalidan los inventarios de ambos y el canje se hace en una transacción (todo o nada).

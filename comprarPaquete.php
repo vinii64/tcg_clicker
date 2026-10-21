@@ -4,12 +4,12 @@ session_start();
 
 $id_user = $_SESSION['id'];
 
-// Seleccionamos los puntos actuales de la BBDD
+
 $query2 = "SELECT puntos FROM usuarios WHERE id = '$id_user'";
 $puntosDB = mysqli_query($conexion, $query2);
 $resultado = mysqli_fetch_assoc($puntosDB);
 
-// Restamos el valor del paquete a los puntos y actualizamos el valor en la BBDD
+
 if ($resultado['puntos'] >= 10) {
 
     $puntosActuales = $resultado['puntos'] - 10;
@@ -17,7 +17,6 @@ if ($resultado['puntos'] >= 10) {
     $query = "UPDATE usuarios SET puntos = '$puntosActuales' WHERE id = '$id_user'";
     $actualizacionPuntos = mysqli_query($conexion, $query);
 
-    // Si la consulta funcionó, generamos las cartas
     if ($actualizacionPuntos) {
 
         echo "
@@ -27,12 +26,12 @@ if ($resultado['puntos'] >= 10) {
 
         echo "<div class='inventario'>";
 
-        // Generación de 3 cartas
+ 
         for ($cartaAmount = 0; $cartaAmount < 3; $cartaAmount++) {
 
             $rareza = random_int(1, 100);
 
-            // Rareza
+            // rareza
             if ($rareza <= 50) {
                 $rarezaCarta = "comun";
             } elseif ($rareza <= 65) {
@@ -47,7 +46,7 @@ if ($resultado['puntos'] >= 10) {
                 $rarezaCarta = "divino";
             }
 
-            // Edición
+            // edicion
             $roll = random_int(1, 100);
 
             if ($roll <= 75) {
