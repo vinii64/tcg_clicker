@@ -37,15 +37,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/styleLogin.css">
+    <link rel="stylesheet" href="style/styleLogin.css?v=2">
     <title>Document</title>
 </head>
 <body>
     <div class="login-container">
         <h1>Inicia sesión</h1>
         <form action="" method="post">
-            <input type="text" name="email" placeholder="E-mail"></input> <br></br>
-            <input type="password" name="contrasenia" placeholder="Contraseña"></input> <br></br>
+            <input type="email" name="email" placeholder="E-mail" autocomplete="email" autocapitalize="none" required></input> <br></br>
+            <input type="password" name="contrasenia" placeholder="Contraseña" autocomplete="current-password" required></input> <br></br>
             <button type="submit">Aceptar</button><br><br><br>   
         </form>
 

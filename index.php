@@ -16,7 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/style.css?v=3">
     <title>Inicio</title>
 </head>
 <body>
@@ -41,7 +41,7 @@
 
     <a href="logout.php">Salir</a>
 </nav>
-
+<div class="cartel"><h1>Inicio</h1></div>
 <div class="caja">
     <p><span id="contador"><?php echo $usuario['puntos']; ?></span></p>
     <button class="boton" id='contar'>+</button>
@@ -49,6 +49,7 @@
 </div>
 
 <script src="script/ajaxPuntos.js"></script>
+<script src="script/menu.js"></script>
 </body>
 </html>
 

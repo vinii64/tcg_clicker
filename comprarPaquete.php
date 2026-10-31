@@ -50,15 +50,15 @@ if ($resultado['puntos'] >= 10) {
             $roll = random_int(1, 100);
 
             if ($roll <= 75) {
-                $rollCarta = "Normal";
+                $edicionDB = "normal";
             } elseif ($roll <= 85) {
-                $rollCarta = "Brillante";
+                $edicionDB = "brillante";
             } elseif ($roll <= 92) {
-                $rollCarta = "Holografica";
+                $edicionDB = "holografica";
             } elseif ($roll <= 97) {
-                $rollCarta = "Policroma";
+                $edicionDB = "policroma";
             } else {
-                $rollCarta = "Negativa";
+                $edicionDB = "negativa";
             }
 
             // bbtener carta aleatoria de la rareza correspondiente
@@ -77,13 +77,13 @@ if ($resultado['puntos'] >= 10) {
             }
             $idCarta = $carta['id_carta'];
 
-            $sqlInventario = "SELECT * FROM inventario WHERE id_usuario = '$id_user' AND id_carta = '$idCarta'";
+            $sqlInventario = "SELECT * FROM inventario WHERE id_usuario = '$id_user' AND id_carta = '$idCarta' AND edicion = '$edicionDB'";
 
             $resultadoInventario = mysqli_query($conexion, $sqlInventario);
 
-            $consultaContadorCarta = "UPDATE inventario SET cantidad = cantidad + 1 WHERE id_usuario = '$id_user' AND id_carta = '$idCarta'";
+            $consultaContadorCarta = "UPDATE inventario SET cantidad = cantidad + 1 WHERE id_usuario = '$id_user' AND id_carta = '$idCarta' AND edicion = '$edicionDB'";
 
-            $consultaAgregarCarta = "INSERT INTO inventario (id_usuario, id_carta, cantidad) VALUES ('$id_user', '$idCarta', 1)";
+            $consultaAgregarCarta = "INSERT INTO inventario (id_usuario, id_carta, edicion, cantidad) VALUES ('$id_user', '$idCarta', '$edicionDB', 1)";
 
             if (mysqli_num_rows($resultadoInventario) > 0) {
 
@@ -107,18 +107,26 @@ if ($resultado['puntos'] >= 10) {
                 "divino" => "Divina"
             ];
 
+            $edicionMostrar = [
+                "normal" => "Normal",
+                "brillante" => "Brillante",
+                "holografica" => "Holográfica",
+                "policroma" => "Policroma",
+                "negativa" => "Negativa"
+            ];
+
 
             if ($carta) {
                 echo "
                 
-                  <div class='carta'>
-                     <div class='carta-imagen'>
+                  <div class='carta ed-$edicionDB'>
+                     <div class='carta-imagen ed-fx'>
                            <img src='data:image/jpeg;base64," . base64_encode($carta['imagen']) . "'>
                      </div>
 
                      <div class='carta-info'>
                            <p>Rareza: <span>{$rarezaMostrar[$rarezaCarta]}</span></p>
-                           <p>Edición: <span>$rollCarta</span></p>
+                           <p>Edición: <span class='ed-pill ed-pill-$edicionDB'>{$edicionMostrar[$edicionDB]}</span></p>
                      </div>
                   </div>
                 

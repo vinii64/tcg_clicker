@@ -90,7 +90,7 @@ if (
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de admin.</title>
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/style.css?v=3">
 </head>
 <body>
 
@@ -114,7 +114,7 @@ if (
 
     <a href="logout.php">Salir</a>
 </nav>
-<div class="cartel"><h1>Panel de administración.</h1></div>
+<div class="cartel"><h1>Panel de administracion</h1></div>
 
 <div class="agregar">
     
@@ -219,5 +219,6 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
 
 </div>
 
+<script src="script/menu.js"></script>
 </body>
 </html>
